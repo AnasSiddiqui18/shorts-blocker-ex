@@ -1,13 +1,15 @@
-import { CountButton } from "~features/count-button"
-
 import "~style.css"
 
-function IndexPopup() {
+function Popup() {
   return (
-    <div className="plasmo-flex plasmo-items-center plasmo-justify-center plasmo-h-16 plasmo-w-40">
-      <CountButton />
+    <div className="flex items-center justify-center h-32 w-64 font-Poppins font-semibold tracking-wider">
+      <div className="flex flex-col gap-1">
+        <img src="assets/yt.png" alt="" className="size-8" />
+        <h1 className="text-xl">Block Youtube Shorts</h1>
+        <p className="font-normal">Block youtube shorts like a cake 🍰</p>
+      </div>
     </div>
   )
 }
 
-export default IndexPopup
+export default Popup

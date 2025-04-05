@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./src/**/*.{tsx,html}"],
   darkMode: "media",
-  prefix: "plasmo-"
+  theme: {
+    fontFamily: {
+      Poppins: ["Poppins", "sans-serif"]
+    }
+  }
 }
