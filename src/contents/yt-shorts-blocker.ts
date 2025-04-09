@@ -5,6 +5,31 @@ export const config: PlasmoCSConfig = {
   world: "MAIN"
 }
 
+function blockShortsLinks() {
+  const miniGuide = document.querySelectorAll("ytd-mini-guide-entry-renderer")
+  const tabList = document.querySelectorAll("ytd-guide-entry-renderer")
+
+  if (miniGuide.length) {
+    miniGuide.forEach((link) => {
+      if (link.ariaLabel === "Shorts") {
+        console.log("removing mini short link...")
+        link.remove()
+      }
+    })
+  }
+
+  if (tabList.length) {
+    tabList.forEach((link) => {
+      for (const child of Array.from(link.children)) {
+        if (child instanceof HTMLAnchorElement && child?.title === "Shorts") {
+          console.log("removing tab short link...")
+          child.remove()
+        }
+      }
+    })
+  }
+}
+
 function blockShorts() {
   const richShortsNode = document.querySelector("ytd-rich-shelf-renderer") // shorts on yt home page
   const reelShortsNode = document.querySelector("ytd-reel-shelf-renderer") // shorts related to search term
@@ -32,6 +57,12 @@ const Observer = new MutationObserver((mutationList, _observer) => {
           ) {
             blockShorts()
           }
+
+          if (
+            node.tagName?.toLowerCase() === "ytd-mini-guide-entry-renderer" ||
+            node.tagName?.toLowerCase() === "ytd-guide-entry-renderer"
+          )
+            blockShortsLinks()
         }
       })
     }
