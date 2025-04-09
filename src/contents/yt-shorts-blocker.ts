@@ -6,16 +6,35 @@ export const config: PlasmoCSConfig = {
 }
 
 function blockShorts() {
-  const shortsNode = document.querySelector("ytd-rich-shelf-renderer")
-  if (shortsNode) {
-    shortsNode.remove()
-    console.log("Blocked shorts successfully")
+  const richShortsNode = document.querySelector("ytd-rich-shelf-renderer") // shorts on yt home page
+  const reelShortsNode = document.querySelector("ytd-reel-shelf-renderer") // shorts related to search term
+
+  if (richShortsNode) {
+    richShortsNode.remove()
+    console.log("Blocked rich shorts successfully")
+  }
+
+  if (reelShortsNode) {
+    reelShortsNode.remove()
+    console.log("Blocked reel shorts successfully")
   }
 }
 
 const Observer = new MutationObserver((mutationList, _observer) => {
   for (const mutation of mutationList) {
-    if (mutation.type === "childList") blockShorts()
+    if (mutation.type === "childList") {
+      const addedNodes = mutation.addedNodes
+      addedNodes.forEach((node: Node) => {
+        if (node instanceof HTMLElement) {
+          if (
+            node.tagName?.toLowerCase() === "ytd-rich-shelf-renderer" ||
+            node.tagName?.toLowerCase() === "ytd-reel-shelf-renderer"
+          ) {
+            blockShorts()
+          }
+        }
+      })
+    }
   }
 })
 
