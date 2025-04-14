@@ -5,6 +5,8 @@ export const config: PlasmoCSConfig = {
   world: "MAIN"
 }
 
+console.log("content script runs")
+
 function blockShortsLinks() {
   const miniGuide = document.querySelectorAll("ytd-mini-guide-entry-renderer")
   const tabList = document.querySelectorAll("ytd-guide-entry-renderer")
@@ -44,6 +46,13 @@ function blockShorts() {
     console.log("Blocked reel shorts successfully")
   }
 }
+
+blockShorts()
+
+window.addEventListener("DOMContentLoaded", () => {
+  console.log("youtube loaded successfully")
+  blockShorts()
+})
 
 const Observer = new MutationObserver((mutationList, _observer) => {
   for (const mutation of mutationList) {
